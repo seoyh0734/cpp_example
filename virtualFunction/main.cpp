@@ -1,53 +1,74 @@
+// g++ -o main main.cpp && ./main
 #include <iostream>
 
-using namespace std;
-
-class A {
+class Parent
+{
+ protected:
+  int num;
  public:
-  int num_;
-
-  A() {
-    cout << "create A" << endl;
-    this->num_=1;
+  Parent()
+  {
+    std::cout << "Parent()" << std::endl;
+    this->num = 10;
   }
 
-  virtual ~A() {
-    cout << "delete A" << endl;
+  ~Parent()
+  {
+    std::cout << "~Parent()" << std::endl;
   }
 
-  A(const A& a) {
-    cout << "copy A" << endl;
-    num_ = a.num_;
-  }
-
-  A(const A&& a) {
-    cout << "move A" << endl;
-    num_ = a.num_;
-  }
-
-  virtual void printInfo() { cout << "class A " << this->num_ << endl; }
-};
-
-class B : public A {
- public:
-  B() {
-    cout << "create B" << endl;
-    this->num_=2;
-  }
-  void printInfo() {
-    cout << "class B " << this->num_ << endl;
-  }
-
-  ~B() {
-    cout << "delete B" << endl;
+  virtual void print() // 1 Case
+  //void print()       // 2 Case
+  {
+    std::cout << "Parent print()" << std::endl;
   }
 };
 
-int main(int argc, char** argv) {
-  B b;
-  A a = (A&&)(b);
-  a.printInfo();
+class Child : Parent
+{
+ public:
+  Child()
+  {
+    std::cout << "Child()" << std::endl;
+  }
 
-  A* ap = new B;
-  ap->printInfo();
+  ~Child()
+  {
+    std::cout << "~Child()" << std::endl;
+  }
+
+  void print()
+  {
+    std::cout << "Child print()" << std::endl;
+  }
+};
+
+int main(int argc, char* argv[])
+{
+  int ret = -1;
+  Child c;
+
+  Parent *pPrt;
+  pPrt = (Parent*)&c;
+  pPrt->print();
+
+  return ret;
 }
+
+/**
+ * Output
+ * ===============
+ * 1 Case
+ * Parent()
+ * Child()
+ * Child print() // virtual keyword makes call origin object function
+ * ~Child()
+ * ~Parent()
+ *
+ * 2 Case
+ * Parent()
+ * Child()
+ * Parent print()
+ * ~Child()
+ * ~Parent()
+ */
