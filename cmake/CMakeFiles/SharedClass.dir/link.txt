@@ -1,0 +1,1 @@
+g++  -fPIC -m64  -shared -Wl,-soname,libSharedClass.so -o libSharedClass.so CMakeFiles/SharedClass.dir/sharedLib/SharedClass.cpp.o 

@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/root/cppTest/cmake/main.cpp
+iostream
+-
+src/ClassA.h
+/root/cppTest/cmake/src/ClassA.h
+sharedLib/SharedClass.h
+/root/cppTest/cmake/sharedLib/SharedClass.h
+
+/root/cppTest/cmake/sharedLib/SharedClass.h
+iostream
+-
+
+/root/cppTest/cmake/src/ClassA.h
+iostream
+-
+

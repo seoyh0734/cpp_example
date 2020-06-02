@@ -1,0 +1,58 @@
+#include <iostream>
+#include <apr_general.h>
+#include <apr_dso.h>
+
+using namespace std;
+
+int main(int argc, char* argv[])
+{
+  cout << "start main" << endl;
+  apr_status_t rv;
+  apr_pool_t *mp;
+  const char fname[] = "./liba.so";
+  apr_dso_handle_t *dso_h;
+
+  //typedef double (*pow_fn_t)(double x, double y);
+  //pow_fn_t pow_fn;
+  typedef void (*func_t)();
+  func_t func;
+
+  apr_initialize();
+  apr_pool_create(&mp, NULL);
+
+  /* load libm.so */
+  if ((rv = apr_dso_load(&dso_h, fname, mp)) != APR_SUCCESS) {
+    cout << "Failed to Load Library" << endl;
+    goto error;
+  }
+
+  /* seek pow(3) function from libm.so */
+  if ((rv = apr_dso_sym((apr_dso_handle_sym_t*)&func, dso_h, "aPrint")) != APR_SUCCESS) {
+    cout << "Failed to Load Function" << endl;
+    goto error;
+  }
+
+  /* call pow(3) */
+  //printf("%d ^ %d = %f\n", 2, 2, pow_fn(2, 2));
+  //printf("%d ^ %d = %f\n", 3, 2, pow_fn(3, 2));
+  //printf("%d ^ %d = %f\n", 2, 10, pow_fn(2, 10));
+  func();
+
+  apr_dso_unload(dso_h);
+  apr_pool_destroy(mp);
+  apr_terminate();
+  cout << "Success" << endl;
+  return 0;
+
+ error:
+  {
+    char errbuf[256];
+    apr_strerror(rv, errbuf, sizeof(errbuf));
+    //printf("error: %d, %s\n", rv, errbuf);
+    apr_dso_error(dso_h, errbuf, sizeof(errbuf));
+    //printf("dso-error: %d, %s\n", rv, errbuf);
+  }
+  apr_terminate();
+  cout << "Fail" << endl;
+  return -1;
+}

@@ -1,0 +1,1 @@
+g++   -m64   CMakeFiles/Main.dir/main.cpp.o  -o Main -rdynamic libClassA.a libSharedClass.so -Wl,-rpath,/root/cppTest/cmake 

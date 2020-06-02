@@ -1,0 +1,3 @@
+/root/cppTest/cmake/CMakeFiles/Main.dir
+/root/cppTest/cmake/CMakeFiles/ClassA.dir
+/root/cppTest/cmake/CMakeFiles/SharedClass.dir

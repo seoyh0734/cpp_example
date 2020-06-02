@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.3)
+set(CMAKE_VERBOSE_MAKEFILE true)
+set(CMAKE_CXX_COMPILER g++)
+add_definitions("-Wall -std=c++11")
+
+add_subdirectory(src)
+
+INCLUDE_DIRECTORIES(sharedLib)
+add_library(SharedClass SHARED sharedLib/SharedClass.cpp)
+
+LINK_DIRECTORIES(sharedLib)
+add_executable(Main main.cpp)
+TARGET_LINK_LIBRARIES(SharedClass ClassA)

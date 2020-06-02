@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+class parentC {
+ public:
+  int num_;
+
+  parentC() {
+    this->num_ = 10;
+  }
+};
+
+class childC : parentC {
+ public:
+  int num2_;
+
+  childC() : parentC() {
+    this->num2_ = 11;
+  }
+};
+
+int main(int argc, char** argv) {
+  parentC p;
+  childC c;
+
+  cout << "p.num_ : " << p.num_ <<endl;
+  //cout << "c.num_ : " << c.num_ <<endl;
+  //cout << "c.num2_ : " << c.num2_ <<endl;
+
+  return 0;
+}
