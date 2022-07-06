@@ -32,6 +32,15 @@ class A {
     return arr_[index]; 
   }
 
+  A& operator + (A& leftA, A& rightA)
+  {
+    A a;
+
+    a.size = leftA.size + rightA.size;
+
+    return a;
+  }
+
  private:
   void init() {
     int cnt = 0;

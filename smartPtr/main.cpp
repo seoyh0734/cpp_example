@@ -1,50 +1,77 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include <memory>
 
-class A {
+#include <cstring>
+
+class User {
  public:
-  int num_;
-  A() {
-    printf("construct!\n");
-    num_ = 0;
+  std::string name;
+
+  char* test_name;
+
+  User(std::string name) : name(name) {
+    std::cout << "create " << this->name << std::endl;
+
+    test_name = new char[100];
+    strcpy(test_name, "inited");
+  };
+
+  ~User() {
+    std::cout << "delete " << this->name << std::endl;
+
+    strcpy(test_name, "deinited");
+    delete[] test_name;
   }
 
-  void printInfo() {
-    printf("num_ = %d\n", num_);
+  void print() {
+    std::cout << this->name << std::endl;
   }
-  
-  ~A() {
-    printf("destruct!\n");
+
+};
+
+class UserList {
+ public:
+  std::vector<User> m_list;
+
+  UserList() {
+  }
+
+  void add(User& user) {
+    m_list.push_back(user);
+  }
+
+  User get(const unsigned short i) {
+    return m_list[i];
+  }
+
+  User* getPtr(const unsigned short i) {
+    return &m_list[i];
   }
 };
 
+static void argTest(User& user) {
+  std::cout << "user : " << user.name << std::endl;
+}
+
 int main(int argc, char** argv) {
-  printf("----==== start program ====----\n\n");
+  User user("hong");
+  user.print();
 
-  A* a = new A();
-  a->printInfo();
-  delete a;
+  UserList userList;
+  userList.add(user);
+  user.name = "kim";
+  user.print();
+  userList.get(0).print();
 
-  std::unique_ptr<A> ptr(new A());
-  ptr->printInfo();
-
-  std::vector<std::unique_ptr<A>> v;
-  printf("size = %d\n", v.size());
-  v.push_back(std::move(ptr));
-  printf("size = %d\n", v.size());
-  //ptr->printInfo(); // Segmentation fault 
-  v.emplace_back(new A());
-  printf("size = %d\n", v.size());
-  v[0]->printInfo(); 
-  v[1]->printInfo();
+  User* userPtr = userList.getPtr(0);
+  userPtr->name = "lee";
+  userList.get(0).print();
   
-  ptr = std::move(v[0]); 
-  ptr->printInfo();
+  argTest(user);
 
-  //v[0]->printInfo(); Segmentation faule
-  v[1]->printInfo();
- 
-  printf("\n----==== end program ====----\n"); 
+  std::cout << "Main end" << std::endl;
+
   return 0;
 }

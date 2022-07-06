@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <stdexcept>
 
 using namespace std;
@@ -19,7 +20,8 @@ int main(int argc, char** argv) {
   //} catch (length_error) {
   //  cout << "good value" << endl; 
   } catch (exception& e) {
-    cout << "exception : " << e.what() << endl;
+    //cout << "exception : " << e.what() << endl;
+    fprintf(stderr, "%s\n", e.what());
   }
 
   return 0;

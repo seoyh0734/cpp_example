@@ -1,2 +1,6 @@
-*/main
-*/*/main
+main
+main2
+*.o
+*.so
+*.a
+*.swp

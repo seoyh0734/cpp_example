@@ -8,7 +8,12 @@ int main(int argc, char* argv[])
 {
   int ret = -1;
   
-  ret = testCharArrWithPtr();
+  //ret = testCharArrWithPtr();
+
+  char* test;
+  test = "asd";
+
+  std::cout << test << std::endl;
 
   return ret;
 }
